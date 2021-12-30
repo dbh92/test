@@ -1,0 +1,794 @@
+﻿@using WebApplication1.Models;
+@{
+    ViewBag.Title = "Student-Info";
+    //var lst = (IEnumerable<HuongViet.Models.AddressInfo>)ViewBag.lstCity;
+    List<StudentLocation> lst = ViewBag.lstCity;
+    List<CheDoUuTien> PriorityLst = ViewBag.priorityLst;
+}
+@section Styles{
+    <link href="~/assets/libs/select2/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        span[aria-labelledby=select2-select_nv_1-container] {
+            height: 37px !important;
+        }
+
+        #btn_chontep_1 {
+            width: 121px;
+        }
+
+            #btn_chontep_1:hover {
+                background-color: blue;
+            }
+    </style>
+}
+
+<div class="row">
+    <div class="col-lg-12 headtitle">
+        <div class="section-heading text-center">
+            <h2 class="section__title" style=" word-wrap: break-word;">Test tuyển sinh lớp 10</h2>
+            <span class="section__divider"></span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 mx-auto form-shared .contact-form-action">
+        <div class="admission-body">
+            <div class="contact-form-action">
+                <div class="form">
+                    <!--Đăng ký nguyện vọng-->
+                    <fieldset style="margin-top:10px; margin-bottom:10px">
+                        <div class="row" style="padding:10px">
+                            <!--Nguyện vọng-->
+                            <div class="col-lg-12">
+                                <p class="tieude">ĐĂNG KÝ DỰ TUYỂN VÀO TRƯỜNG:</p>
+                                <input type="hidden" value="1" id="cbhokhauquocgia" />
+                            </div>
+                            <input class="rdCap" value="3" type="hidden" id="txtDoiTuong">
+                            <div class="col-lg-12 form-group" style="padding:0">
+                                <div id="lstNguyenVong_1">
+                                    <table class="table table-bordered" id="tbNguyenVong_1">
+                                        <tbody id="tbListNguyenVong_1">
+                                            <tr class="clsNguyenVong" id="1">
+                                                <td style="width: 20%">
+                                                    <input class="form-control form-label lbNguyenVong" type="text" value="Nguyện vọng 1" disabled />
+                                                    <input class="idNguyenVong" type="hidden" value="1" />
+                                                    <input class="txtID" id="id_1" type="hidden" value="0" />
+                                                    <input id="isTruongChuyen_CLC" type="hidden" value="0" />
+                                                </td>
+                                                <td>
+                                                    <select data-id="" class="form-control select2" style="width: 100%" id="select_nv_1">
+                                                        <option value="0" data-idtruong="0">Chọn trường</option>
+                                                        <option value="tu">THPT Tân Uyên</option>
+                                                        <option value="bu">THPT Bình Uyên</option>
+                                                        <option value="qt">THPT Quyết Thắng</option>
+                                                        <option value="ms">THPT Mường So</option>
+                                                        <option value="pt">THPT Phong Thổ</option>
+                                                        <option value="ds">THPT Dào San</option>
+                                                        <option value="nt">THPT Nậm Tăm</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr id="ghichu_1" style="display:none">
+                                                <td colspan="3">
+                                                    <i style="color:red">* Ghi chú: </i>
+                                                    <i style="color:red;display:none" class="clsCoSo">Cơ sở: <select class="form-control-sm"></select> </i>
+                                                    <i style="color:red;display:none" data-id="0" class="clsLopChuyen">Lớp học: <select class="form-control-sm"></select></i>
+                                                    <i style="color:red;display:none" data-id="0" class="clsLopChatLuongCao"></i>
+                                                    <i class="clsMonChuyen" data-id="0" hidden></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p class="error-message" id="errortruongdangky"></p>
+                            </div>
+                            <div class="row" style="border-width: 2px; border-style: dotted; padding: 25px; width:100%;margin-left: 0;">
+                                <div class="col-lg-6 form-group">
+                                    <label class="form-label">Mã học sinh</label>
+                                    <input class="form-control" type="text" id="txtmahocsinh" maxlength="100" name="txtmahocsinh" runat="server">
+                                    <p class="error-message" id="errormahocsinh"></p>
+                                    <input id="txtIDHocSinh" type="hidden" value="0" />
+                                    <input id="txtKieuDuLieu" type="hidden" value="0" /> <!--Kiểu của dữ liệu 0: Tự nhập, 1: API-->
+                                    <input id="txtTypeHoSo" type="hidden" value="0" /> <!--Phân biệt trang đăng ký ngoài/trong-->
+                                    <input id="txtIDTruongCurrent" type="hidden" value="0" />
+                                </div>
+                                <div class="col-lg-6 form-group">
+                                    <label class="form-label">Mật khẩu</label>
+                                    <input class="form-control" type="password" id="txtmatkhau" autocomplete="new-password" maxlength="100" name="txtmatkhau">
+                                    <p class="error-message" id="errormatkhau"></p>
+                                </div>
+
+
+                                <p style="font-size: 14px; font-weight:bold; font-style:italic; color: #054e9c">
+                                    *Lưu ý: Sau khi đăng ký [MÃ HỌC SINH] và [MẬT KHẨU] sẽ được gửi về [EMAIL] - Hòm thư điện tử.
+                                    Trong trường hợp hồ sơ bị trả lại và yêu cầu điều chỉnh, phụ huynh/ học sinh có thể
+                                    sửa đổi thông tin hồ sơ bằng cách nhập [MÃ HỌC SINH] và [MẬT KHẨU] đã được cấp. Sau đó nhấn phím [ENTER] ↩️
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--Thông tin học sinh-->
+                    <div class="row">
+                        <div class="d-flex justify-content-center" style="position: relative;top: 22px;width: 100%;align-items: center;text-align: center;flex-direction: row;font-size: 25px;font-weight: bold;align-self: center;">
+                            <div style="padding: 10px; background-color: #0554b6; color: white; border-radius: 15px;">Thông tin học sinh</div>
+                        </div>
+                        <div class="row" style="border-width: 2px; border-style: dotted; padding: 25px; margin-left: 10px; margin-right: 10px;">
+                            <fieldset style="width: 100%">
+                                <input type="hidden" id="txtIDKyThi" value="69" />
+                                <div class="row" style="padding:10px">
+                                    <!--#region Họ tên-->
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Họ và tên<span style="color:red">&nbsp;*</span></label>
+                                        <input class="form-control" type="text" id="txthoten" maxlength="100" name="txthoten">
+                                        <p class="error-message" id="errorhoten"></p>
+                                    </div>
+                                    <!--#endregion-->
+                                    <!--#region Giới tính-->
+                                    <div class="col-lg-6 form-group gender-group">
+                                        <label class="form-label">Giới tính</label>
+                                        <div class="sidebar-widget rating-widget">
+                                            <div class="rating__list">
+                                                <label class="review-label customline">
+                                                    <input value="true" type="radio" name="Gender" checked>
+                                                    <span class="textradio">
+                                                        Nam
+                                                    </span>
+                                                    <span class="review-mark"></span>
+                                                </label>
+                                                <label class="review-label customline">
+                                                    <input value="true" type="radio" name="Gender">
+                                                    <span class="textradio">
+                                                        Nữ
+                                                    </span>
+                                                    <span class="review-mark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--#endregion-->
+                                    <!--#region Ngày sinh-->
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Ngày sinh<span style="color:red">&nbsp;*</span></label>
+                                        @*<input class="form-control" id="txtngaysinh" type="text" maxlength="50" name="txtngaysinh">
+                                            <p class="error-message" id="errorngaysinh"></p>*@
+                                        <input id="txtngaysinh" class="form-control input-mask" type="text" maxlength="50" name="txtngaysinh" data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="dd/mm/yyyy">
+                                        <p class="error-message" id="errorngaysinh"></p>
+                                    </div>
+                                    <!--#endregion-->
+                                    <!--#region Dân tộc-->
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Dân tộc<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control w-25" id="txtdantoc" name="txtdantoc">
+                                                    <option value="Kinh (Việt)">Kinh (Việt)</option>
+                                                    <option value="Tày">Tày</option>
+                                                    <option value="Thái">Thái</option>
+                                                    <option value="Mường">Mường</option>
+                                                    <option value="Hoa (Hán)">Hoa (Hán)</option>
+                                                    <option value="Khmer">Khmer</option>
+                                                    <option value="Nùng">Nùng</option>
+                                                    <option value="HMông (Mèo)">HMông (Mèo)</option>
+                                                    <option value="Dao">Dao</option>
+                                                    <option value="Gia-rai">Gia-rai</option>
+                                                    <option value="Ê-đê"> Ê-đê</option>
+                                                    <option value="Ba-na">Ba-na</option>
+                                                    <option value="Sán-Chay (Cao lan - Sán chỉ)">Sán-Chay (Cao lan - Sán chỉ)</option>
+                                                    <option value="Chăm (Chàm)">Chăm (Chàm)</option>
+                                                    <option value="Xê-đăng"> Xê-đăng</option>
+                                                    <option value="Sán-Dìu">Sán-Dìu</option>
+                                                    <option value="Hrê">Hrê</option>
+                                                    <option value="Cơ-ho">Cơ-ho</option>
+                                                    <option value="Ra Glay">Ra Glay</option>
+                                                    <option value="M'Nông">M'Nông</option>
+                                                    <option value="Thổ">Thổ</option>
+                                                    <option value="Xtiêng">Xtiêng</option>
+                                                    <option value="Khơ Mú">Khơ Mú</option>
+                                                    <option value="Bru-Vân Kiều">Bru-Vân Kiều</option>
+                                                    <option value="Giáy">Giáy</option>
+                                                    <option value="Cơ tu">Cơ tu</option>
+                                                    <option value="Gié-Triêng">Gié-Triêng</option>
+                                                    <option value="Ta Ôi">Ta Ôi</option>
+                                                    <option value="Ma">Ma</option>
+                                                    <option value="Co">Co</option>
+                                                    <option value="Chơ Ro">Chơ Ro</option>
+                                                    <option value="Hà Nhì">Hà Nhì</option>
+                                                    <option value="Xinh Mun">Xinh Mun</option>
+                                                    <option value="Chu-ru">Chu-ru</option>
+                                                    <option value="Lào">Lào</option>
+                                                    <option value="La Chí">La Chí</option>
+                                                    <option value="Phù Lá">Phù Lá</option>
+                                                    <option value="La Hủ">La Hủ</option>
+                                                    <option value="Kháng">Kháng</option>
+                                                    <option value="Lự">Lự</option>
+                                                    <option value="Pà Thẻn">Pà Thẻn</option>
+                                                    <option value="Lô Lô">Lô Lô</option>
+                                                    <option value="Chứt">Chứt</option>
+                                                    <option value="Mảng">Mảng</option>
+                                                    <option value="Cờ Lao">Cờ Lao</option>
+                                                    <option value="Bố Y">Bố Y</option>
+                                                    <option value="La Ha">La Ha</option>
+                                                    <option value="Cống">Cống</option>
+                                                    <option value="Ngái">Ngái</option>
+                                                    <option value="Si La">Si La</option>
+                                                    <option value="Pu Péo">Pu Péo</option>
+                                                    <option value="Brâu">Brâu</option>
+                                                    <option value="Rơ Măm">Rơ Măm</option>
+                                                    <option value="Ơ Đu">Ơ Đu</option>
+                                                </select>
+                                                <p class="error-message" id="errordantoc"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--#endregion-->
+                                    <!--#region Nơi sinh-->
+                                    <div class="col-lg-12">
+                                        <p class="tieude">NƠI SINH :</p>
+                                        <input type="hidden" value="1" id="cbhokhauquocgia" />
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Tỉnh/Thành phố<span style="color:red">&nbsp;*</span></label>
+                                        <div class="">
+                                            <div class="">
+                                                <select class="form-control" id="cbnoisinhthanhpho">
+                                                    <option value="0">Chọn tỉnh/thành phố</option>
+                                                    @foreach (var item in lst)
+                                                    {
+                                                        <option value=@item.IdAddress>@item.NameAddress</option>
+                                                    }
+                                                </select>
+                                                <p class="error-message" id="errornoisinhthanhpho"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Quận/Huyện<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbnoisinhquan">
+                                                    <option value="0">Chọn quận/huyện</option>
+                                                </select>
+                                                <p class="error-message" id="errornoisinhquan"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--#region Hộ khẩu tạm trú-->
+                                    <div class="col-lg-12 clsTamTru">
+                                        <p class="tieude" style="padding-left: 0">
+                                            HỘ KHẨU TẠM TRÚ : <i hidden style="color:#054e9c; font-size:13px">(Thông tin hộ khẩu tạm trú không bắt buộc)</i>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-lg-4 form-group clsTamTru">
+                                        <label class="form-label">Tỉnh/Thành phố</label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbhokhauthanhpho_tamtru">
+                                                    <option value="0">Chọn tỉnh/thành phố</option>
+                                                    @foreach (var item in lst)
+                                                    {
+                                                        <option value=@item.IdAddress>@item.NameAddress</option>
+                                                    }
+                                                </select>
+                                                <p class="error-message" id="errorhokhauthanhpho_tamtru"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 form-group clsTamTru">
+                                        <label class="form-label">Quận/Huyện</label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbhokhauquan_tamtru">
+                                                    <option value="0">Chọn quận/huyện</option>
+                                                </select>
+                                                <p class="error-message" id="errorhokhauquan_tamtru"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 form-group clsTamTru">
+                                        <label class="form-label">Phường/Xã</label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbhokhauphuong_tamtru">
+                                                    <option value="0">Chọn phường/xã</option>
+                                                </select>
+                                                <p class="error-message" id="errorhokhauphuong_tamtru"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 form-group clsTamTru">
+                                        <label class="form-label">Số nhà, đường, khối phố, thôn, bản</label>
+                                        <input class="form-control" type="text" id="txthokhaudiachi_tamtru" name="txthokhaudiachi_tamtru">
+                                        <p class="error-message" id="errorhokhaudiachi_tamtru"></p>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Ngày tạm trú</label>
+                                        <input class="form-control" id="txtngaycap_tamtru" type="text" maxlength="50" name="txtngaycap_tamtru">
+                                        <p class="error-message" id="errorngaycap_tamtru"></p>
+                                    </div>
+                                    <!--#endregion-->
+                                    <!--#region Hộ khẩu thường trú-->
+                                    <div class="col-lg-12">
+                                        <p class="tieude">
+                                            HỘ KHẨU THƯỜNG TRÚ :
+                                            <i hidden style="color:#054e9c; font-size:13px">(Bạn có muốn nhập thông tin hộ khẩu tạm trú)</i>
+                                            <input hidden type="checkbox" class="col-md-1" />
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Tỉnh/Thành phố<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbhokhauthanhpho">
+                                                    @foreach (var item in lst)
+                                                    {
+                                                        <option value=@item.IdAddress>@item.NameAddress</option>
+                                                    }
+                                                </select>
+                                                <p class="error-message" id="errorhokhauthanhpho"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Quận/Huyện<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbhokhauquan">
+                                                    <option value="0">Chọn quận/huyện</option>
+                                                </select>
+                                                <p class="error-message" id="errorhokhauquan"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Phường/Xã<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbhokhauphuong" )">
+                                                    <option value="1">Chọn phường/xã</option>
+                                                </select>
+                                                <p class="error-message" id="errorhokhauphuong"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 form-group">
+                                        <label class="form-label">Số nhà, đường, khối phố, thôn, bản</label>
+                                        <input class="form-control" type="text" id="txthokhaudiachi" name="txthokhaudiachi">
+                                        <p class="error-message" id="errorhokhaudiachi"></p>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Ngày thường trú</label>
+                                        <input class="form-control" id="txtngaycap_thuongtru" type="text" maxlength="50" name="txtngaycap_thuongtru">
+                                        <p class="error-message" id="errorngaycap_thuongtru"></p>
+                                    </div>
+                                    <!--#endregion-->
+                                    <!--#region Nguyện vọng thêm-->
+                                    <div class="col-lg-12 NguyenVong_Them">
+                                        <p class="tieude" style="padding-left: 0">
+                                            NGUYỆN VỌNG THÊM :
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12 NguyenVong_Them">
+                                        <table class="table table-bordered" id="tbNguyenVong"></table>
+                                    </div>
+                                    <!--#endregion Nguyện vọng thêm-->
+                                    <!--#region Nơi ở hiện tại-->
+                                    <div class="col-lg-12">
+                                        <p class="tieude">NƠI Ở HIỆN TẠI :</p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Tỉnh/Thành phố<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbnoiothanhpho">
+                                                    @foreach (var item in lst)
+                                                    {
+                                                        <option value=@item.IdAddress>@item.NameAddress</option>
+                                                    }
+                                                </select>
+                                                <p class="error-message" id="errornoiothanhpho"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Quận/Huyện<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbnoioquan">
+                                                    <option value="0">Chọn quận/huyện</option>
+                                                </select>
+                                                <p class="error-message" id="errornoioquan"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Phường/Xã<span style="color:red">&nbsp;*</span></label>
+                                        <div class="course-filter">
+                                            <div class="courses-ordering">
+                                                <select class="form-control" id="cbnoiophuong">
+                                                    <option value="0">Chọn phường/xã</option>
+                                                </select>
+                                                <p class="error-message" id="errornoiophuong"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Số nhà, đường, khối phố, thôn, bản</label>
+                                        <input class="form-control" type="text" id="txtnoiodiachi" name="txtnoiodiachi">
+                                        <p class="error-message" id="errornoiodiachi"></p>
+                                    </div>
+                                    <!--#endregion-->
+                                </div>
+                            </fieldset>
+                            <!--Vị trí ĐĂNG KÝ NV Cu-->
+                            <!--Điểm học bạ-->
+                            <fieldset style="width: 100%">
+                                <div class="row" style="padding: 10px">
+                                    <div class="col-lg-12">
+                                        <p class="tieude">HỌC BẠ :</p>
+                                    </div>
+                                    <!--Học lực-->
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Học lực</label>
+                                        <input class="form-control" type="text" id="txthocluc" maxlength="100" name="txthocluc">
+                                        <p class="error-message" id="errorhocluc"></p>
+                                    </div>
+                                    <!--Hạnh kiểm-->
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Hạnh kiểm</label>
+                                        <input class="form-control" type="text" id="txthanhkiem" maxlength="100" name="txthanhkiem">
+                                        <p class="error-message" id="errorhanhkiem"></p>
+                                    </div>
+                                    <!--Điểm học bạ-->
+                                    <div class="col-lg-12 form-group">
+                                        <label class="form-label">Điểm học bạ</label>
+                                        <table class="table table-hover table-bordered overflow-auto" style="width: 100%" id="tblhoso">
+                                            <thead style="background: #3c8dbc;color: white;">
+                                                <tr style="vertical-align:top">
+                                                    <th class=" text-center" style="vertical-align:top">Lớp</th>
+                                                    <!--Load danh sách môn học thành các cột-->
+                                                    <th class=" text-center" style="vertical-align:top; width: 2">To&#225;n</th>
+                                                    <th class=" text-center" style="vertical-align:top; width: 2">Tiếng Anh</th>
+                                                    <th class=" text-center" style="vertical-align:top; width: 2">Ngữ Văn</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="lstDiemHocBa">
+                                                <!--Hiển thị số hàng theo danh sách lớp-->
+                                                <tr data-lop="9">
+                                                    <td class="text-left mobile-hide text-center">Lớp 9</td>
+                                                    <td class="text-left">
+                                                        <input data-lop="9" data-monhoc="1" class="form-control input-sm diem" type="text" placeholder="Nhập điểm môn To&#225;n" />
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <input data-lop="9" data-monhoc="3" class="form-control input-sm diem" type="text" placeholder="Nhập điểm môn Tiếng Anh" />
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <input data-lop="9" data-monhoc="4" class="form-control input-sm diem" type="text" placeholder="Nhập điểm môn Ngữ Văn" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!--Giải thưởng quốc gia và đối tượng ưu tiên-->
+                            <fieldset style="width:100% !important">
+                                <div class="row" style="padding:10px">
+                                    <div class="col-md-12">
+                                        <p class="tieude">CHẾ ĐỘ ƯU TIÊN :</p>
+                                    </div>
+                                    <!--Đối tượng ưu tiên-->
+                                    <div class="col-lg-12 form-group" style="margin-bottom:15px">
+                                        <label class="form-label">Đối tượng ưu tiên/ Diện chính sách</label>
+                                        @{
+                                            int i = 0;
+                                            int j = 0;
+                                        }
+                                        <div class="course-filter">
+                                            <div class="courses-ordering" id="cbDTUuTien">
+                                                <label class="form-control">Chọn đối tượng ưu tiên <span id="sumChoose" style="color:red; float:right; margin-right:50px"></span></label>
+                                            </div>
+                                            <div id="lstDoiTuong" style="display:none">
+                                                <table class="table table-bordered" id="tbDoiTuongUuTien">
+                                                    <tbody>
+                                                        @foreach (var pri in PriorityLst)
+                                                        {
+                                                            if (pri.iduutien == 4)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="2">01 - @pri.tenuutien</td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        @foreach (var pri in PriorityLst)
+                                                        {
+                                                            if (pri.iduutien == 4)
+                                                            {
+
+                                                                <tr>
+                                                                    <td style="text-align:center;width:10%">
+                                                                        <div class="custom-checkbox">
+                                                                            <input type="checkbox" id=@pri.iduutien value=@pri.iduutien/>
+                                                                            <label for=@pri.iduutien></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        @pri.tenuutien
+                                                                    </td>
+                                                                    <td style="display:none">
+                                                                        @i
+                                                                    </td>
+                                                                </tr>
+                                                                i++;
+                                                            }
+                                                        }
+                                                        @foreach (var pri in PriorityLst)
+                                                        {
+                                                            if (pri.iduutien == 3)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="3">02 - Diện chính sách</td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        <tr>
+                                                            @foreach (var pri in PriorityLst)
+                                                            {
+                                                                if (pri.iduutien == 3)
+                                                                {
+                                                                    <td style="text-align:center;width:10%">
+                                                                        <div class="custom-checkbox">
+                                                                            <input type="checkbox" id=@pri.iduutien value=@pri.iduutien />
+                                                                            <label for=@pri.iduutien></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        @pri.tenuutien
+                                                                    </td>
+                                                                    <td style="display:none">
+                                                                        @j
+                                                                    </td>
+                                                                }
+                                                                j++;
+                                                            }
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Giải thưởng cấp trường-->
+                                    <div class="col-lg-12">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="chkCoGiaiThuong">
+                                            <label for="chkCoGiaiThuong">Có giải thưởng cấp trường trở lên</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!--Hoàn thành chương trình cấp dưới-->
+                            <!--Hồ sơ đính kèm-->
+                            <fieldset style="width:100% !important">
+                                <div class="row" style="padding:10px">
+                                    <div class="col-md-12">
+                                        <p class="tieude">
+                                            HỒ SƠ ĐÍNH KÈM :
+                                        </p>
+                                        <span class="error-message" id="errortailieudinhkem"></span>
+                                    </div>
+                                    <div class="col-lg-12 form-group" id="Giaytolienquan">
+                                        <table class="table table-bordered table-hover overflow-auto" style="width: 100%">
+                                            <thead style="background: #3c8dbc; color: white;">
+                                                <tr>
+                                                    <th style="width: 90%; text-align:center">Loại giấy tờ</th>
+                                                    <th style="width: 65%; text-align:center" hidden>Ghi chú</th>
+                                                    <th colspan="2" style="width: 10%; text-align:center">Thao tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="lst_chonfile_DinhKem">
+                                                <tr id="file_loai_1">
+                                                    <td style="vertical-align:middle; font-weight:bold">Giấy khai sinh <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh mặt trước v&#224; mặt sau (nếu c&#243;)</span></td>
+                                                    <td style="vertical-align:middle" hidden>
+                                                        <textarea class="form-control ghichu" id="ghichu_minhchung_1"
+                                                                  placeholder="Nhập ghi chú cho tệp minh chứng ..."
+                                                                  rows="1" style="width:100%; resize: vertical; min-height: 45px"></textarea>
+                                                    </td>
+                                                    <td colspan="2" style="vertical-align:middle">
+                                                        <input class="form-control" type="file" id="fDinhKem_1" multiple maxlength="100" name="fDinhKem" hidden>
+                                                        <label type="button" class="form-control btn btn_chontep" id="btn_chontep_1" style="background-color: #e9e9e9" for="fDinhKem_1">
+                                                            <i class="fa fa-save"></i>&ensp;Chọn tệp
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr id="file_loai_2">
+                                                    <td style="vertical-align:middle; font-weight:bold">Sổ hộ khẩu <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh từ trang b&#236;a đến trang cuối c&#249;ng</span></td>
+                                                    <td style="vertical-align:middle" hidden>
+                                                        <textarea class="form-control ghichu" id="ghichu_minhchung_2"
+                                                                  placeholder="Nhập ghi chú cho tệp minh chứng ..."
+                                                                  rows="1" style="width:100%; resize: vertical; min-height: 45px"></textarea>
+                                                    </td>
+                                                    <td colspan="2" style="vertical-align:middle">
+                                                        <input class="form-control" type="file" id="fDinhKem_2" multiple maxlength="100" name="fDinhKem" hidden>
+                                                        <label type="button" class="form-control btn btn_chontep" id="btn_chontep_2" style="background-color: #e9e9e9" for="fDinhKem_2">
+                                                            <i class="fa fa-save"></i>&ensp;Chọn tệp
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr id="file_loai_3">
+                                                    <td style="vertical-align:middle; font-weight:bold">C&#225;c giấy tờ kh&#225;c( hộ ngh&#232;o, HS khuyết tật, GCN HTCT tiểu học,...) <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh từ trang b&#236;a đến trang cuối c&#249;ng</span></td>
+                                                    <td style="vertical-align:middle" hidden>
+                                                        <textarea class="form-control ghichu" id="ghichu_minhchung_3"
+                                                                  placeholder="Nhập ghi chú cho tệp minh chứng ..."
+                                                                  rows="1" style="width:100%; resize: vertical; min-height: 45px"></textarea>
+                                                    </td>
+                                                    <td colspan="2" style="vertical-align:middle">
+                                                        <input class="form-control" type="file" id="fDinhKem_3" multiple maxlength="100" name="fDinhKem" hidden>
+                                                        <label type="button" class="form-control btn btn_chontep" id="btn_chontep_3" style="background-color: #e9e9e9" for="fDinhKem_3">
+                                                            <i class="fa fa-save"></i>&ensp;Chọn tệp
+                                                        </label>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <!--Thông tin cha mẹ, người giám hộ-->
+                    <div class="row">
+                        <div class="d-flex justify-content-center" style="position: relative;top: 22px;width: 100%;align-items: center;text-align: center;flex-direction: row;font-size: 25px;font-weight: bold;align-self: center;">
+                            <div style="padding: 10px; background-color: #0554b6; color: white; border-radius: 15px;">Thông tin cha mẹ, người giám hộ</div>
+                        </div>
+                        <div class="row" style="border-width: 2px; border-style: dotted; padding: 25px; margin-left: 10px; margin-right: 10px;">
+                            <!--Thông tin cha mẹ, người giám hộ-->
+                            <fieldset style="margin-top:30px">
+                                <div class="row" style="padding:10px">
+                                    <!--Thông tin cha-->
+                                    <div class="col-lg-12">
+                                        <p class="tieude">THÔNG TIN CHA:</p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Họ và tên</label>
+                                        <input class="form-control" type="text" id="txthotencha" maxlength="100" name="txthotencha">
+                                        <p class="error-message" id="errorhotencha"></p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Nghề nghiệp</label>
+                                        <input class="form-control" type="text" id="txtnghenghiepcha" maxlength="100" name="txtnghenghiepcha">
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Tuổi</label>
+                                        <input class="form-control" type="text" id="txtnamsinhcha" maxlength="50" name="txtnamsinhcha">
+                                        <p class="error-message" id="errornamsinhcha"></p>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Nơi công tác</label>
+                                        <input class="form-control cmnd" type="text" id="txtcmndcha" maxlength="250" name="txtcmndcha">
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <input class="form-control" type="text" id="txtsdtcha" maxlength="12" name="txtsdtcha">
+                                    </div>
+                                    <!--Thông tin mẹ-->
+                                    <div class="col-lg-12">
+                                        <p class="tieude">THÔNG TIN MẸ:</p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Họ và tên</label>
+                                        <input class="form-control" type="text" id="txthotenme" maxlength="100" name="txthotenme">
+                                        <p class="error-message" id="errorhotenme"></p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Nghề nghiệp</label>
+                                        <input class="form-control" type="text" id="txtnghenghiepme" maxlength="100" name="txtnghenghiepme">
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Tuổi</label>
+                                        <input class="form-control" type="text" id="txtnamsinhme" maxlength="50" name="txtnamsinhme">
+                                        <p class="error-message" id="errornamsinhme"></p>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Nơi công tác</label>
+                                        <input class="form-control cmnd" type="text" id="txtcmndme" maxlength="250" name="txtcmndme">
+                                    </div>
+
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <input class="form-control" type="text" id="txtsdtme" maxlength="12" name="txtsdtme">
+                                    </div>
+                                    <!--Người giám hộ-->
+                                    <div class="col-lg-12">
+                                        <p class="tieude">THÔNG TIN NGƯỜI GIÁM HỘ:</p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Họ và tên</label>
+                                        <input class="form-control" type="text" id="txthotenngh" maxlength="100" name="txthotenngh">
+                                        <p class="error-message" id="errorhotenngh"></p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Nghề nghiệp</label>
+                                        <input class="form-control" type="text" id="txtnghenghiepngh" maxlength="100" name="txtnghenghiepngh">
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Tuổi</label>
+                                        <input class="form-control" type="text" id="txtnamsinhngh" maxlength="50" name="txtnamsinhngh">
+                                        <p class="error-message" id="errornamsinhngh"></p>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Nơi công tác</label>
+                                        <input class="form-control cmnd" type="text" id="txtcmndngh" maxlength="250" name="txtcmndngh">
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <input class="form-control" type="text" id="txtsdtngh" maxlength="12" name="txtsdtngh">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!--Thông tin liên lạc-->
+                            <fieldset style="margin-top:30px">
+                                <div class="row" style="padding:10px">
+                                    <div class="col-lg-12">
+                                        <p class="tieude">THÔNG TIN LIÊN LẠC:</p>
+                                    </div>
+                                    <div class="col-lg-12 note">
+                                        Vui lòng nhập số điện thoại và địa chỉ email để cơ quan chức năng liên hệ với ông/bà khi có kết quả.
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Điện thoại liên hệ</label>
+                                        <input class="form-control" type="text" id="txtdienthoailienhe" maxlength="20" name="txtdienthoailienhe">
+                                        <p class="error-message" id="errordienthoailienhe"></p>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="form-label">Email liên hệ<span style="color:red">&nbsp;*</span></label>
+                                        <input class="form-control" type="text" id="txtemaillienhe" name="txtemaillienhe" placeholder="email@gmail.com">
+                                        <p class="error-message" id="erroremaillienhe"></p>
+                                    </div>
+                                    <div class="col-lg-12 note">
+                                        Sau khi phụ huynh học sinh đăng ký tuyển sinh đầu cấp thành công ngoài việc nhận giấy báo nhập học qua email đăng ký,
+                                        phụ huynh học sinh có thể in/tải giấy báo nhập học tại trang web <a href="/">tuyensinh.huongvietedm.vn</a> ở chức năng <a href="javascript:void(0);">TRA CỨU KẾT QUẢ TUYỂN SINH</a>.
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="col-lg-12" style="margin-top:15px">
+                                <div class="custom-checkbox">
+                                    <input type="checkbox" id="camket">
+                                    <label for="camket">Tôi xin cam kết khai báo đúng thông tin</label>
+                                </div>
+                                <p class="error-message" id="errorcamket"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 text-center" style="margin-top:20px">
+                        <a class="btn-primary" style="color:#fff;cursor:pointer;background-color: #0072c5; color: white;" id="savethongtin">Đăng ký</a>
+                        @*<a class="theme-btn" style="color: #fff; cursor: pointer; background-color: #51be78; color: white; display: none" id="Xem_DonDangKyDuTuyen">Đơn đăng ký</a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/assets/libs/select2/js/select2.min.js"></script>
+    <script src="~/assets/js/pages/form-advanced.init.js"></script>
+    <script src="~/assets/libs/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/assets/js/pages/form-mask.init.js"></script>
+    <script src="~/assets/Project/SaveInfo.js"></script>
+    <script src="~/assets/Project/GetDataAddress.js"></script>
+    <script>
+        var priorityLst = $("#tbDoiTuongUuTien tr td input:checked").length.toString();
+        $("#sumChoose").innerText = priorityLst;
+    </script>
+}
+
+
+
+
+
