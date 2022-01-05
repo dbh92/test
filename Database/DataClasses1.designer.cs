@@ -30,25 +30,19 @@ namespace WebApplication1.Database
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void Inserthosodinhkem(hosodinhkem instance);
-    partial void Updatehosodinhkem(hosodinhkem instance);
-    partial void Deletehosodinhkem(hosodinhkem instance);
-    partial void Inserthocba(hocba instance);
-    partial void Updatehocba(hocba instance);
-    partial void Deletehocba(hocba instance);
-    partial void Insertchedouutien(chedouutien instance);
-    partial void Updatechedouutien(chedouutien instance);
-    partial void Deletechedouutien(chedouutien instance);
     partial void InsertStudentLocation(StudentLocation instance);
     partial void UpdateStudentLocation(StudentLocation instance);
     partial void DeleteStudentLocation(StudentLocation instance);
     partial void Insertthongtinhocsinh(thongtinhocsinh instance);
     partial void Updatethongtinhocsinh(thongtinhocsinh instance);
     partial void Deletethongtinhocsinh(thongtinhocsinh instance);
+    partial void InsertFileInfo(FileInfo instance);
+    partial void UpdateFileInfo(FileInfo instance);
+    partial void DeleteFileInfo(FileInfo instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["testConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["testConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -77,19 +71,11 @@ namespace WebApplication1.Database
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<hosodinhkem> hosodinhkems
+		public System.Data.Linq.Table<StudentLocation> StudentLocations
 		{
 			get
 			{
-				return this.GetTable<hosodinhkem>();
-			}
-		}
-		
-		public System.Data.Linq.Table<hocba> hocbas
-		{
-			get
-			{
-				return this.GetTable<hocba>();
+				return this.GetTable<StudentLocation>();
 			}
 		}
 		
@@ -101,11 +87,19 @@ namespace WebApplication1.Database
 			}
 		}
 		
-		public System.Data.Linq.Table<StudentLocation> StudentLocations
+		public System.Data.Linq.Table<hocba> hocbas
 		{
 			get
 			{
-				return this.GetTable<StudentLocation>();
+				return this.GetTable<hocba>();
+			}
+		}
+		
+		public System.Data.Linq.Table<hosodinhkem> hosodinhkems
+		{
+			get
+			{
+				return this.GetTable<hosodinhkem>();
 			}
 		}
 		
@@ -116,454 +110,12 @@ namespace WebApplication1.Database
 				return this.GetTable<thongtinhocsinh>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.hosodinhkem")]
-	public partial class hosodinhkem : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _idhoso;
-		
-		private string _giaykhaisinh;
-		
-		private string _sohokhau;
-		
-		private string _cacgiaytokhac;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidhosoChanging(string value);
-    partial void OnidhosoChanged();
-    partial void OngiaykhaisinhChanging(string value);
-    partial void OngiaykhaisinhChanged();
-    partial void OnsohokhauChanging(string value);
-    partial void OnsohokhauChanged();
-    partial void OncacgiaytokhacChanging(string value);
-    partial void OncacgiaytokhacChanged();
-    #endregion
-		
-		public hosodinhkem()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idhoso", DbType="NVarChar(250) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string idhoso
+		public System.Data.Linq.Table<FileInfo> FileInfos
 		{
 			get
 			{
-				return this._idhoso;
-			}
-			set
-			{
-				if ((this._idhoso != value))
-				{
-					this.OnidhosoChanging(value);
-					this.SendPropertyChanging();
-					this._idhoso = value;
-					this.SendPropertyChanged("idhoso");
-					this.OnidhosoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_giaykhaisinh", DbType="NVarChar(250)")]
-		public string giaykhaisinh
-		{
-			get
-			{
-				return this._giaykhaisinh;
-			}
-			set
-			{
-				if ((this._giaykhaisinh != value))
-				{
-					this.OngiaykhaisinhChanging(value);
-					this.SendPropertyChanging();
-					this._giaykhaisinh = value;
-					this.SendPropertyChanged("giaykhaisinh");
-					this.OngiaykhaisinhChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sohokhau", DbType="NVarChar(250)")]
-		public string sohokhau
-		{
-			get
-			{
-				return this._sohokhau;
-			}
-			set
-			{
-				if ((this._sohokhau != value))
-				{
-					this.OnsohokhauChanging(value);
-					this.SendPropertyChanging();
-					this._sohokhau = value;
-					this.SendPropertyChanged("sohokhau");
-					this.OnsohokhauChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cacgiaytokhac", DbType="NVarChar(250)")]
-		public string cacgiaytokhac
-		{
-			get
-			{
-				return this._cacgiaytokhac;
-			}
-			set
-			{
-				if ((this._cacgiaytokhac != value))
-				{
-					this.OncacgiaytokhacChanging(value);
-					this.SendPropertyChanging();
-					this._cacgiaytokhac = value;
-					this.SendPropertyChanged("cacgiaytokhac");
-					this.OncacgiaytokhacChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.hocba")]
-	public partial class hocba : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idhocba;
-		
-		private string _hocluc;
-		
-		private string _hanhkiem;
-		
-		private string _toan;
-		
-		private string _tienganh;
-		
-		private string _nguvan;
-		
-		private string _mahs;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidhocbaChanging(int value);
-    partial void OnidhocbaChanged();
-    partial void OnhoclucChanging(string value);
-    partial void OnhoclucChanged();
-    partial void OnhanhkiemChanging(string value);
-    partial void OnhanhkiemChanged();
-    partial void OntoanChanging(string value);
-    partial void OntoanChanged();
-    partial void OntienganhChanging(string value);
-    partial void OntienganhChanged();
-    partial void OnnguvanChanging(string value);
-    partial void OnnguvanChanged();
-    partial void OnmahsChanging(string value);
-    partial void OnmahsChanged();
-    #endregion
-		
-		public hocba()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idhocba", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idhocba
-		{
-			get
-			{
-				return this._idhocba;
-			}
-			set
-			{
-				if ((this._idhocba != value))
-				{
-					this.OnidhocbaChanging(value);
-					this.SendPropertyChanging();
-					this._idhocba = value;
-					this.SendPropertyChanged("idhocba");
-					this.OnidhocbaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_hocluc", DbType="NVarChar(50)")]
-		public string hocluc
-		{
-			get
-			{
-				return this._hocluc;
-			}
-			set
-			{
-				if ((this._hocluc != value))
-				{
-					this.OnhoclucChanging(value);
-					this.SendPropertyChanging();
-					this._hocluc = value;
-					this.SendPropertyChanged("hocluc");
-					this.OnhoclucChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_hanhkiem", DbType="NVarChar(50)")]
-		public string hanhkiem
-		{
-			get
-			{
-				return this._hanhkiem;
-			}
-			set
-			{
-				if ((this._hanhkiem != value))
-				{
-					this.OnhanhkiemChanging(value);
-					this.SendPropertyChanging();
-					this._hanhkiem = value;
-					this.SendPropertyChanged("hanhkiem");
-					this.OnhanhkiemChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_toan", DbType="NVarChar(50)")]
-		public string toan
-		{
-			get
-			{
-				return this._toan;
-			}
-			set
-			{
-				if ((this._toan != value))
-				{
-					this.OntoanChanging(value);
-					this.SendPropertyChanging();
-					this._toan = value;
-					this.SendPropertyChanged("toan");
-					this.OntoanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tienganh", DbType="NVarChar(50)")]
-		public string tienganh
-		{
-			get
-			{
-				return this._tienganh;
-			}
-			set
-			{
-				if ((this._tienganh != value))
-				{
-					this.OntienganhChanging(value);
-					this.SendPropertyChanging();
-					this._tienganh = value;
-					this.SendPropertyChanged("tienganh");
-					this.OntienganhChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nguvan", DbType="NVarChar(50)")]
-		public string nguvan
-		{
-			get
-			{
-				return this._nguvan;
-			}
-			set
-			{
-				if ((this._nguvan != value))
-				{
-					this.OnnguvanChanging(value);
-					this.SendPropertyChanging();
-					this._nguvan = value;
-					this.SendPropertyChanged("nguvan");
-					this.OnnguvanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mahs", DbType="NVarChar(50)")]
-		public string mahs
-		{
-			get
-			{
-				return this._mahs;
-			}
-			set
-			{
-				if ((this._mahs != value))
-				{
-					this.OnmahsChanging(value);
-					this.SendPropertyChanging();
-					this._mahs = value;
-					this.SendPropertyChanged("mahs");
-					this.OnmahsChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.chedouutien")]
-	public partial class chedouutien : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _iduutien;
-		
-		private string _tenuutien;
-		
-		private System.Nullable<int> _parentId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OniduutienChanging(int value);
-    partial void OniduutienChanged();
-    partial void OntenuutienChanging(string value);
-    partial void OntenuutienChanged();
-    partial void OnparentIdChanging(System.Nullable<int> value);
-    partial void OnparentIdChanged();
-    #endregion
-		
-		public chedouutien()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_iduutien", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int iduutien
-		{
-			get
-			{
-				return this._iduutien;
-			}
-			set
-			{
-				if ((this._iduutien != value))
-				{
-					this.OniduutienChanging(value);
-					this.SendPropertyChanging();
-					this._iduutien = value;
-					this.SendPropertyChanged("iduutien");
-					this.OniduutienChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenuutien", DbType="NVarChar(250)")]
-		public string tenuutien
-		{
-			get
-			{
-				return this._tenuutien;
-			}
-			set
-			{
-				if ((this._tenuutien != value))
-				{
-					this.OntenuutienChanging(value);
-					this.SendPropertyChanging();
-					this._tenuutien = value;
-					this.SendPropertyChanged("tenuutien");
-					this.OntenuutienChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_parentId", DbType="Int")]
-		public System.Nullable<int> parentId
-		{
-			get
-			{
-				return this._parentId;
-			}
-			set
-			{
-				if ((this._parentId != value))
-				{
-					this.OnparentIdChanging(value);
-					this.SendPropertyChanging();
-					this._parentId = value;
-					this.SendPropertyChanged("parentId");
-					this.OnparentIdChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<FileInfo>();
 			}
 		}
 	}
@@ -578,9 +130,9 @@ namespace WebApplication1.Database
 		
 		private string _NameAddress;
 		
-		private System.Nullable<int> _ParentId;
+		private int _ParentId;
 		
-		private System.Nullable<int> _LevelAddress;
+		private int _LevelAddress;
 		
 		private System.Nullable<System.DateTime> _CreatedDate;
 		
@@ -598,9 +150,9 @@ namespace WebApplication1.Database
     partial void OnIdAddressChanged();
     partial void OnNameAddressChanging(string value);
     partial void OnNameAddressChanged();
-    partial void OnParentIdChanging(System.Nullable<int> value);
+    partial void OnParentIdChanging(int value);
     partial void OnParentIdChanged();
-    partial void OnLevelAddressChanging(System.Nullable<int> value);
+    partial void OnLevelAddressChanging(int value);
     partial void OnLevelAddressChanged();
     partial void OnCreatedDateChanging(System.Nullable<System.DateTime> value);
     partial void OnCreatedDateChanged();
@@ -617,7 +169,7 @@ namespace WebApplication1.Database
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAddress", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAddress", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int IdAddress
 		{
 			get
@@ -637,7 +189,7 @@ namespace WebApplication1.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameAddress", DbType="NVarChar(250)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameAddress", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
 		public string NameAddress
 		{
 			get
@@ -657,8 +209,8 @@ namespace WebApplication1.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentId", DbType="Int")]
-		public System.Nullable<int> ParentId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentId", DbType="Int NOT NULL")]
+		public int ParentId
 		{
 			get
 			{
@@ -677,8 +229,8 @@ namespace WebApplication1.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LevelAddress", DbType="Int")]
-		public System.Nullable<int> LevelAddress
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LevelAddress", DbType="Int NOT NULL")]
+		public int LevelAddress
 		{
 			get
 			{
@@ -794,6 +346,285 @@ namespace WebApplication1.Database
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.chedouutien")]
+	public partial class chedouutien
+	{
+		
+		private int _iduutien;
+		
+		private string _tenuutien;
+		
+		private System.Nullable<int> _parentId;
+		
+		public chedouutien()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_iduutien", DbType="Int NOT NULL")]
+		public int iduutien
+		{
+			get
+			{
+				return this._iduutien;
+			}
+			set
+			{
+				if ((this._iduutien != value))
+				{
+					this._iduutien = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenuutien", DbType="NVarChar(250)")]
+		public string tenuutien
+		{
+			get
+			{
+				return this._tenuutien;
+			}
+			set
+			{
+				if ((this._tenuutien != value))
+				{
+					this._tenuutien = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_parentId", DbType="Int")]
+		public System.Nullable<int> parentId
+		{
+			get
+			{
+				return this._parentId;
+			}
+			set
+			{
+				if ((this._parentId != value))
+				{
+					this._parentId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.hocba")]
+	public partial class hocba
+	{
+		
+		private int _idhocba;
+		
+		private string _hocluc;
+		
+		private string _hanhkiem;
+		
+		private string _toan;
+		
+		private string _tienganh;
+		
+		private string _nguvan;
+		
+		private string _mahs;
+		
+		public hocba()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idhocba", DbType="Int NOT NULL")]
+		public int idhocba
+		{
+			get
+			{
+				return this._idhocba;
+			}
+			set
+			{
+				if ((this._idhocba != value))
+				{
+					this._idhocba = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_hocluc", DbType="NVarChar(50)")]
+		public string hocluc
+		{
+			get
+			{
+				return this._hocluc;
+			}
+			set
+			{
+				if ((this._hocluc != value))
+				{
+					this._hocluc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_hanhkiem", DbType="NVarChar(50)")]
+		public string hanhkiem
+		{
+			get
+			{
+				return this._hanhkiem;
+			}
+			set
+			{
+				if ((this._hanhkiem != value))
+				{
+					this._hanhkiem = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_toan", DbType="NVarChar(50)")]
+		public string toan
+		{
+			get
+			{
+				return this._toan;
+			}
+			set
+			{
+				if ((this._toan != value))
+				{
+					this._toan = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tienganh", DbType="NVarChar(50)")]
+		public string tienganh
+		{
+			get
+			{
+				return this._tienganh;
+			}
+			set
+			{
+				if ((this._tienganh != value))
+				{
+					this._tienganh = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nguvan", DbType="NVarChar(50)")]
+		public string nguvan
+		{
+			get
+			{
+				return this._nguvan;
+			}
+			set
+			{
+				if ((this._nguvan != value))
+				{
+					this._nguvan = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mahs", DbType="NVarChar(50)")]
+		public string mahs
+		{
+			get
+			{
+				return this._mahs;
+			}
+			set
+			{
+				if ((this._mahs != value))
+				{
+					this._mahs = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.hosodinhkem")]
+	public partial class hosodinhkem
+	{
+		
+		private string _idhoso;
+		
+		private string _giaykhaisinh;
+		
+		private string _sohokhau;
+		
+		private string _cacgiaytokhac;
+		
+		public hosodinhkem()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idhoso", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
+		public string idhoso
+		{
+			get
+			{
+				return this._idhoso;
+			}
+			set
+			{
+				if ((this._idhoso != value))
+				{
+					this._idhoso = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_giaykhaisinh", DbType="NVarChar(250)")]
+		public string giaykhaisinh
+		{
+			get
+			{
+				return this._giaykhaisinh;
+			}
+			set
+			{
+				if ((this._giaykhaisinh != value))
+				{
+					this._giaykhaisinh = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sohokhau", DbType="NVarChar(250)")]
+		public string sohokhau
+		{
+			get
+			{
+				return this._sohokhau;
+			}
+			set
+			{
+				if ((this._sohokhau != value))
+				{
+					this._sohokhau = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cacgiaytokhac", DbType="NVarChar(250)")]
+		public string cacgiaytokhac
+		{
+			get
+			{
+				return this._cacgiaytokhac;
+			}
+			set
+			{
+				if ((this._cacgiaytokhac != value))
+				{
+					this._cacgiaytokhac = value;
+				}
 			}
 		}
 	}
@@ -1819,6 +1650,164 @@ namespace WebApplication1.Database
 					this._hientaidiachi = value;
 					this.SendPropertyChanged("hientaidiachi");
 					this.OnhientaidiachiChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FileInfo")]
+	public partial class FileInfo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _idfile;
+		
+		private string _urlfile;
+		
+		private string _namefile;
+		
+		private string _sizefile;
+		
+		private string _extfile;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidfileChanging(long value);
+    partial void OnidfileChanged();
+    partial void OnurlfileChanging(string value);
+    partial void OnurlfileChanged();
+    partial void OnnamefileChanging(string value);
+    partial void OnnamefileChanged();
+    partial void OnsizefileChanging(string value);
+    partial void OnsizefileChanged();
+    partial void OnextfileChanging(string value);
+    partial void OnextfileChanged();
+    #endregion
+		
+		public FileInfo()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idfile", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long idfile
+		{
+			get
+			{
+				return this._idfile;
+			}
+			set
+			{
+				if ((this._idfile != value))
+				{
+					this.OnidfileChanging(value);
+					this.SendPropertyChanging();
+					this._idfile = value;
+					this.SendPropertyChanged("idfile");
+					this.OnidfileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_urlfile", DbType="NVarChar(250)")]
+		public string urlfile
+		{
+			get
+			{
+				return this._urlfile;
+			}
+			set
+			{
+				if ((this._urlfile != value))
+				{
+					this.OnurlfileChanging(value);
+					this.SendPropertyChanging();
+					this._urlfile = value;
+					this.SendPropertyChanged("urlfile");
+					this.OnurlfileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_namefile", DbType="NVarChar(250)")]
+		public string namefile
+		{
+			get
+			{
+				return this._namefile;
+			}
+			set
+			{
+				if ((this._namefile != value))
+				{
+					this.OnnamefileChanging(value);
+					this.SendPropertyChanging();
+					this._namefile = value;
+					this.SendPropertyChanged("namefile");
+					this.OnnamefileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sizefile", DbType="NVarChar(250)")]
+		public string sizefile
+		{
+			get
+			{
+				return this._sizefile;
+			}
+			set
+			{
+				if ((this._sizefile != value))
+				{
+					this.OnsizefileChanging(value);
+					this.SendPropertyChanging();
+					this._sizefile = value;
+					this.SendPropertyChanged("sizefile");
+					this.OnsizefileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_extfile", DbType="NVarChar(250)")]
+		public string extfile
+		{
+			get
+			{
+				return this._extfile;
+			}
+			set
+			{
+				if ((this._extfile != value))
+				{
+					this.OnextfileChanging(value);
+					this.SendPropertyChanging();
+					this._extfile = value;
+					this.SendPropertyChanged("extfile");
+					this.OnextfileChanged();
 				}
 			}
 		}

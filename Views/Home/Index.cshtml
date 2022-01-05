@@ -131,14 +131,14 @@
                                         <div class="sidebar-widget rating-widget">
                                             <div class="rating__list">
                                                 <label class="review-label customline">
-                                                    <input value="true" type="radio" name="Gender" checked>
+                                                    <input value="M" type="radio" name="gioitinh" checked>
                                                     <span class="textradio">
                                                         Nam
                                                     </span>
                                                     <span class="review-mark"></span>
                                                 </label>
                                                 <label class="review-label customline">
-                                                    <input value="true" type="radio" name="Gender">
+                                                    <input value="F" type="radio" name="gioitinh">
                                                     <span class="textradio">
                                                         Nữ
                                                     </span>
@@ -454,7 +454,6 @@
                                                     <th class=" text-center" style="vertical-align:top; width: 2">To&#225;n</th>
                                                     <th class=" text-center" style="vertical-align:top; width: 2">Tiếng Anh</th>
                                                     <th class=" text-center" style="vertical-align:top; width: 2">Ngữ Văn</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody id="lstDiemHocBa">
@@ -509,11 +508,10 @@
                                                         {
                                                             if (pri.iduutien == 4)
                                                             {
-
                                                                 <tr>
                                                                     <td style="text-align:center;width:10%">
                                                                         <div class="custom-checkbox">
-                                                                            <input type="checkbox" id=@pri.iduutien value=@pri.iduutien/>
+                                                                            <input type="checkbox" id=@pri.iduutien value=@pri.iduutien />
                                                                             <label for=@pri.iduutien></label>
                                                                         </div>
                                                                     </td>
@@ -592,48 +590,53 @@
                                             </thead>
                                             <tbody id="lst_chonfile_DinhKem">
                                                 <tr id="file_loai_1">
-                                                    <td style="vertical-align:middle; font-weight:bold">Giấy khai sinh <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh mặt trước v&#224; mặt sau (nếu c&#243;)</span></td>
-                                                    <td style="vertical-align:middle" hidden>
-                                                        <textarea class="form-control ghichu" id="ghichu_minhchung_1"
-                                                                  placeholder="Nhập ghi chú cho tệp minh chứng ..."
-                                                                  rows="1" style="width:100%; resize: vertical; min-height: 45px"></textarea>
+                                                    <td style="vertical-align:middle; font-weight:bold">
+                                                        Giấy khai sinh <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh mặt trước v&#224; mặt sau (nếu c&#243;)</span>
+                                                        <div id="fileList_1"></div>
                                                     </td>
+
                                                     <td colspan="2" style="vertical-align:middle">
-                                                        <input class="form-control" type="file" id="fDinhKem_1" multiple maxlength="100" name="fDinhKem" hidden>
-                                                        <label type="button" class="form-control btn btn_chontep" id="btn_chontep_1" style="background-color: #e9e9e9" for="fDinhKem_1">
-                                                            <i class="fa fa-save"></i>&ensp;Chọn tệp
-                                                        </label>
+                                                        <div>
+                                                            <input class="form-control" type="file" id="fDinhKem_1" multiple maxlength="100" name="fDinhKem" onchange="updateListFirst()" hidden>
+                                                            <label type="button" class="form-control btn btn_chontep" id="btn_chontep_1" style="background-color: #e9e9e9" for="fDinhKem_1">
+                                                                <i class="fa fa-save"></i>&ensp;Chọn tệp
+                                                            </label>
+                                                        </div>
+                                                        <div id="delFile_1"></div>
                                                     </td>
                                                 </tr>
                                                 <tr id="file_loai_2">
-                                                    <td style="vertical-align:middle; font-weight:bold">Sổ hộ khẩu <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh từ trang b&#236;a đến trang cuối c&#249;ng</span></td>
-                                                    <td style="vertical-align:middle" hidden>
-                                                        <textarea class="form-control ghichu" id="ghichu_minhchung_2"
-                                                                  placeholder="Nhập ghi chú cho tệp minh chứng ..."
-                                                                  rows="1" style="width:100%; resize: vertical; min-height: 45px"></textarea>
+                                                    <td style="vertical-align:middle; font-weight:bold">
+                                                        Sổ hộ khẩu <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh từ trang b&#236;a đến trang cuối c&#249;ng</span>
+                                                        <div id="fileList_2"></div>
                                                     </td>
+
                                                     <td colspan="2" style="vertical-align:middle">
-                                                        <input class="form-control" type="file" id="fDinhKem_2" multiple maxlength="100" name="fDinhKem" hidden>
-                                                        <label type="button" class="form-control btn btn_chontep" id="btn_chontep_2" style="background-color: #e9e9e9" for="fDinhKem_2">
-                                                            <i class="fa fa-save"></i>&ensp;Chọn tệp
-                                                        </label>
+                                                        <div>
+                                                            <input class="form-control" type="file" id="fDinhKem_2" multiple maxlength="100" name="fDinhKem" onchange="updateListFirst()" hidden>
+                                                            <label type="button" class="form-control btn btn_chontep" id="btn_chontep_2" style="background-color: #e9e9e9" for="fDinhKem_2">
+                                                                <i class="fa fa-save"></i>&ensp;Chọn tệp
+                                                            </label>
+                                                        </div>
+                                                        <div id="delFile_2" onclick="removeFile"></div>
                                                     </td>
                                                 </tr>
                                                 <tr id="file_loai_3">
-                                                    <td style="vertical-align:middle; font-weight:bold">C&#225;c giấy tờ kh&#225;c( hộ ngh&#232;o, HS khuyết tật, GCN HTCT tiểu học,...) <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh từ trang b&#236;a đến trang cuối c&#249;ng</span></td>
-                                                    <td style="vertical-align:middle" hidden>
-                                                        <textarea class="form-control ghichu" id="ghichu_minhchung_3"
-                                                                  placeholder="Nhập ghi chú cho tệp minh chứng ..."
-                                                                  rows="1" style="width:100%; resize: vertical; min-height: 45px"></textarea>
+                                                    <td style="vertical-align:middle; font-weight:bold">
+                                                        C&#225;c giấy tờ kh&#225;c( hộ ngh&#232;o, HS khuyết tật, GCN HTCT tiểu học,...) <br /><span style="color:red; font-size:14px; font-style: italic; font-weight: 500;">Ảnh từ trang b&#236;a đến trang cuối c&#249;ng</span>
+                                                        <div id="fileList_3"></div>
                                                     </td>
+
                                                     <td colspan="2" style="vertical-align:middle">
-                                                        <input class="form-control" type="file" id="fDinhKem_3" multiple maxlength="100" name="fDinhKem" hidden>
-                                                        <label type="button" class="form-control btn btn_chontep" id="btn_chontep_3" style="background-color: #e9e9e9" for="fDinhKem_3">
-                                                            <i class="fa fa-save"></i>&ensp;Chọn tệp
-                                                        </label>
+                                                        <div>
+                                                            <input class="form-control" type="file" id="fDinhKem_3" multiple maxlength="100" name="fDinhKem" onchange="updateListFirst()" hidden>
+                                                            <label type="button" class="form-control btn btn_chontep" id="btn_chontep_3" style="background-color: #e9e9e9" for="fDinhKem_3">
+                                                                <i class="fa fa-save"></i>&ensp;Chọn tệp
+                                                            </label>
+                                                        </div>
+                                                        <div id="delFile_3" onclick="removeFile"></div>
                                                     </td>
                                                 </tr>
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -698,7 +701,6 @@
                                         <label class="form-label">Nơi công tác</label>
                                         <input class="form-control cmnd" type="text" id="txtcmndme" maxlength="250" name="txtcmndme">
                                     </div>
-
                                     <div class="col-lg-4 form-group">
                                         <label class="form-label">Số điện thoại</label>
                                         <input class="form-control" type="text" id="txtsdtme" maxlength="12" name="txtsdtme">
@@ -766,15 +768,14 @@
                         </div>
                     </div>
                     <div class="col-lg-12 text-center" style="margin-top:20px">
-                        <a class="btn-primary" style="color:#fff;cursor:pointer;background-color: #0072c5; color: white;" id="savethongtin">Đăng ký</a>
-                        @*<a class="theme-btn" style="color: #fff; cursor: pointer; background-color: #51be78; color: white; display: none" id="Xem_DonDangKyDuTuyen">Đơn đăng ký</a>*@
+                        <button class="btn-primary" style="color:#fff;cursor:pointer;background-color: #0072c5; color: white;" id="savethongtin">Đăng ký</button>
+                        <input type="hidden" id="btnFile" name="btnFile">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @section scripts{
     <script src="~/assets/libs/select2/js/select2.min.js"></script>
     <script src="~/assets/js/pages/form-advanced.init.js"></script>
@@ -782,13 +783,11 @@
     <script src="~/assets/js/pages/form-mask.init.js"></script>
     <script src="~/assets/Project/SaveInfo.js"></script>
     <script src="~/assets/Project/GetDataAddress.js"></script>
+    <script src="~/assets/Project/HandleEvent.js"></script>
     <script>
         var priorityLst = $("#tbDoiTuongUuTien tr td input:checked").length.toString();
         $("#sumChoose").innerText = priorityLst;
     </script>
 }
-
-
-
 
 

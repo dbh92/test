@@ -1,21 +1,100 @@
 ﻿$(document).ready(function () {
-    CheDoUuTien();
-    SaveData();
-});
-
-
-//var frmData = new FormData();
-//console.log(frmData);
-function CheDoUuTien() {
     $("#cbDTUuTien").click(function () {
+        var display = $("#lstDoiTuong").css("display");
         $("#lstDoiTuong").toggle();
-        if ($("#lstDoiTuong").style.display === 'none') {
+        if (display == 'none') {
             $("#lstDoiTuong").css("display", "block")
         } else {
             $("#lstDoiTuong").css("display", "none")
         }
-    })
-}
+    });
+    SaveData();
+    $('#btnFile').click(function () {
+        var fileData = new FormData();
+        var FileLst = [];
+        for (var i = 0; i < ($("#fDinhKem_1").get(0).files.length); i++) {
+            console.log($("#fDinhKem_1").get(0).files[i]);
+            FileLst.push($("#fDinhKem_1").get(0).files[i]);
+        }
+        for (var i = 0; i < ($("#fDinhKem_2").get(0).files.length); i++) {
+            console.log($("#fDinhKem_2").get(0).files[i]);
+            FileLst.push($("#fDinhKem_2").get(0).files[i]);
+        }
+        for (var i = 0; i < ($("#fDinhKem_3").get(0).files.length); i++) {
+            console.log($("#fDinhKem_3").get(0).files[i]);
+            FileLst.push($("#fDinhKem_3").get(0).files[i]);
+        }
+        console.log(FileLst);
+        for (var i = 0; i < FileLst.length; i++) {
+            fileData.append(FileLst[i].name, files[i]);
+        };
+        // Adding more keys/values here if need
+        fileData.append('Test', "Test Object values");
+        $.ajax({
+            type: 'POST',
+            url: "/Home/UploadFiles",
+            type: "POST", //as we will be posting files and other method POST is used
+            data: fileData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log(data)
+            }
+        });
+    });
+});
+
+//var frmData = new FormData();
+//console.log(frmData);
+function updateListFirst() {
+    //var idFile = $("[type='file']").map(function () {
+    //    var idSubFile = $(this).attr('id');
+    //    return idSubFile;
+    //    break;
+    //}).get().join(", ");
+    var input = document.getElementById('fDinhKem_1');
+    var output = document.getElementById('fileList_1');
+    output.innerHTML = '<ul id="ulId">';
+    for (var i = 0; i < input.files.length; ++i) {
+        var idLi = input.files.item(i).name.split('.')[0];
+        output.innerHTML += '<li id="' + idLi +'hsdk">' + input.files.item(i).name + '</li>';
+        $('#delFile_1').append('<a class="fa fa-trash btn_chontep" id="' + idLi +'" style="width:100%; cursor: pointer;"onclick="removeFile(this.id)"></a>')
+    }
+    output.innerHTML += '</ul>';
+};
+function updateListSecond() {
+    //var idFile = $("[type='file']").map(function () {
+    //    var idSubFile = $(this).attr('id');
+    //    return idSubFile;
+    //    break;
+    //}).get().join(", ");
+    var input = document.getElementById('fDinhKem_2');
+    var output = document.getElementById('fileList_2');
+    output.innerHTML = '<ul>';
+    for (var i = 0; i < input.files.length; ++i) {
+        output.innerHTML += '<li>' + input.files.item(i).name + '</li>';
+        $('#delFile_2').append('<a class="fa fa-trash btn_chontep" id="removeFile_2" style="width:100%; cursor: pointer;"onclick="removeFile()"></a>')
+    }
+    output.innerHTML += '</ul>';
+    /*$('#fileList_2').append(output);*/
+
+};
+function updateListThird() {
+    //var idFile = $("[type='file']").map(function () {
+    //    var idSubFile = $(this).attr('id');
+    //    return idSubFile;
+    //    break;
+    //}).get().join(", ");
+    var input = document.getElementById('fDinhKem_3');
+    var output = document.getElementById('fileList_3');
+    output.innerHTML = '<ul>';
+    for (var i = 0; i < input.files.length; ++i) {
+        output.innerHTML += '<li>' + input.files.item(i).name + '</li>';
+        $('#delFile_3').append('<a class="fa fa-trash btn_chontep" id="removeFile_3" style="width:100%; cursor: pointer;"onclick="removeFile()"></a>')
+    }
+    output.innerHTML += '</ul>';
+};
+
 function SaveData() {
     $("#savethongtin").click(function () {
         var frmData = new FormData();
@@ -24,7 +103,7 @@ function SaveData() {
         var txtmatkhau = $("#txtmatkhau").val();
         //Thông tin học sinh
         var txthoten = $("#txthoten").val();
-        var gender = $('input[name=gender]:checked');
+        var gioitinh = $('input[name=gioitinh]:checked').val();
         var txtngaysinh = $("#txtngaysinh").val();
         var txtdantoc = $("#txtdantoc").val();
         var cbnoisinhthanhpho = $("#cbnoisinhthanhpho").val();
@@ -55,15 +134,22 @@ function SaveData() {
         for (var i = 0; i < priorityLst; i++) {
             var element = $("#tbDoiTuongUuTien tr td input:checked")[i].value;
             tbDoiTuongUuTien.push(element);
+        };
+        /*Hồ sơ đính kèm*/
+         var FileLst = [];
+        for (var i = 0 ; i < ($("#fDinhKem_1").get(0).files.length); i++) {
+            console.log($("#fDinhKem_1").get(0).files[i]);
+            FileLst.push($("#fDinhKem_1").get(0).files[i]);
         }
-       
-
-        //Hồ sơ đính kèm
-        //var FileLst = [];
-        //FileLst.push($("#fDinhKem_2").get(0).files[0])
-        //FileLst.push($("#fDinhKem_1").get(0).files[0])
-        //console.log(FileLst)
-        //Thông tin cha mẹ giám hộ
+        for (var i = 0 ; i < ($("#fDinhKem_2").get(0).files.length); i++) {
+            console.log($("#fDinhKem_2").get(0).files[i]);
+            FileLst.push($("#fDinhKem_2").get(0).files[i]);
+        }
+        for (var i = 0 ; i < ($("#fDinhKem_3").get(0).files.length); i++) {
+            console.log($("#fDinhKem_3").get(0).files[i]);
+            FileLst.push($("#fDinhKem_3").get(0).files[i]);
+        }
+        console.log(FileLst);
         var txthotencha = $("#txthotencha").val();
         var txtnghenghiepcha = $("#txtnghenghiepcha").val();
         var txtnamsinhcha = $("#txtnamsinhcha").val();
@@ -86,7 +172,7 @@ function SaveData() {
         frmData.append("txtmahocsinh", txtmahocsinh);
         frmData.append("txtmatkhau", txtmatkhau);
         frmData.append("txthoten", txthoten);
-        frmData.append("gender", gender);
+        frmData.append("gioitinh", gioitinh);
         frmData.append("txtngaysinh", txtngaysinh);
         frmData.append("txtdantoc", txtdantoc);
         frmData.append("cbnoisinhthanhpho", cbnoisinhthanhpho);
@@ -111,12 +197,6 @@ function SaveData() {
         frmData.append("EnglishScore", EnglishScore);
         frmData.append("LitureScore", LitureScore);
         frmData.append("tbDoiTuongUuTien", tbDoiTuongUuTien);
-
-        ////Hồ sơ đính kèm
-        //var FileLst = [];
-        //FileLst.push($("#fDinhKem_2").get(0).files[0])
-        //FileLst.push($("#fDinhKem_1").get(0).files[0])
-        //console.log(FileLst)
         frmData.append("txthotencha", txthotencha);
         frmData.append("txtnghenghiepcha", txtnghenghiepcha);
         frmData.append("txtnamsinhcha", txtnamsinhcha);
@@ -134,6 +214,10 @@ function SaveData() {
         frmData.append("txtsdtngh", txtsdtngh);
         frmData.append("txtdienthoailienhe", txtdienthoailienhe);
         frmData.append("txtemaillienhe", txtemaillienhe);
+        for (var i = 0; i < FileLst.length; i++) {
+            frmData.append(FileLst[i].name, FileLst[i]);
+        };
+
         console.log(frmData);
         $.ajax({
             type: 'POST',
@@ -143,8 +227,11 @@ function SaveData() {
             processData: false,
             contentType: false,
             success: function (data) {
-                console.log(data)
+                console.log("Đây là dữ liệu học sinh:" + data);
+                /*$('#btnFile').trigger('click');*/
             }
         });
     })
 }
+
+

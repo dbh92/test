@@ -143,6 +143,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CheDoUuTien.cs" />
+    <Compile Include="Models\FileInfo.cs" />
     <Compile Include="Models\HocBa.cs" />
     <Compile Include="Models\HoSoDinhKem.cs" />
     <Compile Include="Models\StudentLocation.cs" />
@@ -394,6 +395,7 @@
     <Content Include="assets\libs\twitter-bootstrap-wizard\prettify.css" />
     <Content Include="assets\libs\twitter-bootstrap-wizard\prettify.js" />
     <Content Include="assets\Project\GetDataAddress.js" />
+    <Content Include="assets\Project\HandleEvent.js" />
     <Content Include="assets\Project\SaveInfo.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -405,11 +407,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Database\DataClasses1.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="assets\fonts\boxicons.eot" />
     <Content Include="assets\fonts\boxicons.ttf" />
     <Content Include="assets\fonts\boxicons.woff" />
@@ -443,6 +440,11 @@
     <Content Include="assets\libs\summernote\font\summernote.ttf" />
     <Content Include="assets\libs\summernote\font\summernote.woff" />
     <Content Include="assets\libs\summernote\font\summernote.woff2" />
+    <Content Include="Database\DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Database\DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
@@ -468,12 +470,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\WebApplication3\TS_DangKi\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -490,6 +492,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebApplication2\WebApplication2.csproj">
+      <Project>{daee9f44-b86e-4f39-96d3-06405baeafc1}</Project>
+      <Name>WebApplication2</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

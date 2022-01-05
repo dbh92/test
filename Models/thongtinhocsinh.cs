@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace WebApplication1.Models
 {
+    [Table("thongtinhocsinh")]
     public class thongtinhocsinh
     {
         public string mahs { get; set; }
@@ -13,6 +15,7 @@ namespace WebApplication1.Models
         public string hoten { get; set; }
         public DateTime ngaysinh { get; set; }
         public string gioitinh { get; set; }
+        public string dantoc { get; set; }
         public int noisinhtp { get; set; }
         public int noisinhquan { get; set; }
         public int tamtrutp { get; set; }
@@ -28,7 +31,7 @@ namespace WebApplication1.Models
         public int hientaitp { get; set; }
         public int hientaiquan { get; set; }
         public int hientaixa { get; set; }
-        public int hientaidiachi { get; set; }
+        public string hientaidiachi { get; set; }
         public string hotencha { get; set; }
         public string nghecha { get; set; }
         public string tuoicha { get; set; }

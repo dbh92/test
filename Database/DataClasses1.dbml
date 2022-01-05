@@ -1,16 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="test" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-SS4G5TB\DBH;Initial Catalog=test;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="testConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.hosodinhkem" Member="hosodinhkems">
-    <Type Name="hosodinhkem">
-      <Column Name="idhoso" Type="System.String" DbType="NVarChar(250) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="giaykhaisinh" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="sohokhau" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="cacgiaytokhac" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=HV-COM2021ZVASN\ADMIN;Initial Catalog=test;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="testConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.StudentLocation" Member="StudentLocations">
+    <Type Name="StudentLocation">
+      <Column Name="IdAddress" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NameAddress" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="ParentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LevelAddress" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedUser" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="UpdatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedUser" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chedouutien" Member="chedouutiens">
+    <Type Name="chedouutien">
+      <Column Name="iduutien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="tenuutien" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="parentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.hocba" Member="hocbas">
     <Type Name="hocba">
-      <Column Name="idhocba" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idhocba" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="hocluc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="hanhkiem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="toan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -19,23 +30,12 @@
       <Column Name="mahs" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.chedouutien" Member="chedouutiens">
-    <Type Name="chedouutien">
-      <Column Name="iduutien" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="tenuutien" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="parentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.StudentLocation" Member="StudentLocations">
-    <Type Name="StudentLocation">
-      <Column Name="IdAddress" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="NameAddress" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="ParentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="LevelAddress" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreatedUser" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="UpdatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="UpdatedUser" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+  <Table Name="dbo.hosodinhkem" Member="hosodinhkems">
+    <Type Name="hosodinhkem">
+      <Column Name="idhoso" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="giaykhaisinh" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="sohokhau" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="cacgiaytokhac" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.thongtinhocsinh" Member="thongtinhocsinhs">
@@ -82,6 +82,15 @@
       <Column Name="iduutien" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="idhosodinhkem" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="hientaidiachi" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FileInfo" Member="FileInfos">
+    <Type Name="FileInfo">
+      <Column Name="idfile" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="urlfile" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="namefile" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="sizefile" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="extfile" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
